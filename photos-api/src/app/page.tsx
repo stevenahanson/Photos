@@ -17,6 +17,10 @@ export default function Home() {
         "https://jsonplaceholder.typicode.com/photos"
       );
 
+      if (!response.ok) {
+        throw new Error("Oops! Unable to fetch data, please try again.");
+      }
+
       const data = await response.json();
 
       setPhotos(data);
