@@ -10,6 +10,7 @@ interface Photos {
 
 export default function Home() {
   const [photos, setPhotos] = useState<Photos[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +25,7 @@ export default function Home() {
       const data = await response.json();
 
       setPhotos(data);
+      setLoading(false);
     };
 
     fetchData();
@@ -31,15 +33,19 @@ export default function Home() {
 
   return (
     <div className="grid grid-cols-12">
-      {photos.map((photos) => (
-        <Image
-          key={photos.id}
-          src={photos.url}
-          alt={photos.title}
-          height={100}
-          width={100}
-        />
-      ))}
+      {loading ? (
+        <p className="font-bold text-xl">Loading...</p>
+      ) : (
+        photos.map((photos) => (
+          <Image
+            key={photos.id}
+            src={photos.url}
+            alt={photos.title}
+            height={100}
+            width={100}
+          />
+        ))
+      )}
     </div>
   );
 }
