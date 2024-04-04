@@ -12,13 +12,17 @@ export default function Home() {
   const [photos, setPhotos] = useState<Photos[]>([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/photos")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data: Photos[]) => {
-        setPhotos(data);
-      });
+    const fetchData = async () => {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/photos"
+      );
+
+      const data = await response.json();
+
+      setPhotos(data);
+    };
+
+    fetchData();
   }, []);
 
   return (
